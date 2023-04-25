@@ -9,6 +9,7 @@ db.openDB();
 
 // Endpoint to start a game
 app.post('/game', async (req: Request, res: Response) => {
+    // playGame simulates a game and returns 1 or 2 based on the winner
     let gameRes = playGame();
     if (gameRes === 0) {
         res.send("It's a draw");

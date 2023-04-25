@@ -14,6 +14,7 @@ export class sqliteDB implements DB {
     } 
 
     openDB(): void {
+        // Open the database or if doesn't exist, create a database
         this.db = new sqlite3.Database('./db/data.db', (err: any) => {
             if (err) {
                 return console.error(err.message);
@@ -23,6 +24,7 @@ export class sqliteDB implements DB {
         });
     }
     
+    // If not done before, creates a table and inserts two players' entries
     initizlizeDB(): void {
         this.db?.serialize(() => {
             this.db?.run("CREATE TABLE IF NOT EXISTS players (name integer, wins integer, UNIQUE(name))", (err : any) => {
@@ -56,6 +58,7 @@ export class sqliteDB implements DB {
         });
     }
 
+    // Helper function so that we can await the return string
     async getWinsHelper(): Promise<string> {
         return new Promise((resolve, reject) => {
             let message = "";
@@ -72,6 +75,7 @@ export class sqliteDB implements DB {
         });
     }
     
+    // Returns a string stating two players' wins
     async getWins(): Promise<string> {
         return await this.getWinsHelper();
     }
