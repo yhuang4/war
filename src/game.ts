@@ -5,7 +5,7 @@
 import { Queue } from '@datastructures-js/queue';
 
 // Randomize deck in-place using Durstenfeld shuffle algorithm
-let shuffleDeck = (deck: number[]) => {
+export let shuffleDeck = (deck: number[]) => {
     for (let i = deck.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         let temp = deck[i];
@@ -14,7 +14,7 @@ let shuffleDeck = (deck: number[]) => {
     }
 }
 
-let dealDeck = () => {
+export let dealDeck = () => {
     const deck = [];
     // Four cards for each rank
     for (let i = 1; i <= 13; i++) {
@@ -53,9 +53,7 @@ let getWinner = (deck1: Queue<number>, deck2: Queue<number>) => {
     return 1;
 }
 
-export let playGame = () => {
-    let deck1, deck2;
-    [deck1, deck2] = dealDeck();
+export let simulateGame = (deck1: Queue<number>, deck2: Queue<number>) => {
     while (!hasWinner(deck1, deck2)) {
         // Each player turns up one card face up
         let p1 = deck1.dequeue();
@@ -108,4 +106,10 @@ export let playGame = () => {
     }
 
     return getWinner(deck1, deck2);
+}
+
+export let playGame = () => {
+    let deck1, deck2;
+    [deck1, deck2] = dealDeck();
+    return simulateGame(deck1, deck2);
 }
