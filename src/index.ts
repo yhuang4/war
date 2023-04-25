@@ -12,18 +12,18 @@ db.initizlizeDB();
 app.post('/game', async (req: Request, res: Response) => {
     let gameRes = playGame();
     if (gameRes === 0) {
-        res.status(200).send("It's a draw");
+        res.send("It's a draw");
         return;
     }
     await db.incrementWin(gameRes);
-    res.status(200).send("Player " + gameRes + " wins");
+    res.send("Player " + gameRes + " wins");
 });
 
 // Endpoint to get lifetime wins for each player
 app.get('/wins', async (req: Request, res: Response) => {
     // Query database for lifetime wins
     let message = await db.getWins();
-    res.status(200).send(message);
+    res.send(message);
 });
 
 // Start the server
