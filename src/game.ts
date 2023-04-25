@@ -2,7 +2,6 @@
 // which represent its rank.
 // Each player's hand is represented with a queue.
 
-export {};
 import { Queue } from '@datastructures-js/queue';
 
 // Randomize deck in-place using Durstenfeld shuffle algorithm
@@ -54,7 +53,7 @@ let getWinner = (deck1: Queue<number>, deck2: Queue<number>) => {
     return 1;
 }
 
-let playGame = () => {
+export let playGame = () => {
     let deck1, deck2;
     [deck1, deck2] = dealDeck();
     while (!hasWinner(deck1, deck2)) {
@@ -110,5 +109,3 @@ let playGame = () => {
 
     return getWinner(deck1, deck2);
 }
-
-module.exports = playGame;

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-const playGame = require('./game.js');
-const app = express();
+import { playGame } from './game.js';
 import { sqliteDB } from './db';
+const app = express();
 
 let db = new sqliteDB();
 

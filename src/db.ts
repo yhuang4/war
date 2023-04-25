@@ -27,6 +27,7 @@ export class sqliteDB implements DB {
     // If not done before, creates a table and inserts two players' entries
     initizlizeDB(): void {
         this.db?.serialize(() => {
+            // Table has two columns, name (1 or 2) and wins. name is unique
             this.db?.run("CREATE TABLE IF NOT EXISTS players (name integer, wins integer, UNIQUE(name))", (err : any) => {
                 if (err) {
                     return console.error(err.message);
