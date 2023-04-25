@@ -1,8 +1,7 @@
 import sqlite3 from 'sqlite3';
 
 export interface DB {
-    createDB(): void;
-    initizlizeDB(): void;
+    openDB(): void;
     incrementWin(player: number): void;
     getWins(): Promise<string>;
 }
@@ -14,34 +13,35 @@ export class sqliteDB implements DB {
         this.db = null;
     } 
 
-    createDB(): void {
-        this.db = new sqlite3.Database(':memory:', (err : any) => {
+    openDB(): void {
+        this.db = new sqlite3.Database('./db/data.db', (err: any) => {
             if (err) {
                 return console.error(err.message);
             }
-            console.log('Connected to the in-memory SQlite database.');
+            this.initizlizeDB();
+            console.log('Connected to the data database.');
         });
     }
     
     initizlizeDB(): void {
         this.db?.serialize(() => {
-            this.db?.run("CREATE TABLE players (name integer, wins integer)", (err : any) => {
+            this.db?.run("CREATE TABLE IF NOT EXISTS players (name integer, wins integer, UNIQUE(name))", (err : any) => {
                 if (err) {
                     return console.error(err.message);
                 }
-                console.log("Table created successfully.");
+                console.log("Table already exists or has been created.");
             });
-            this.db?.run("INSERT INTO players(name, wins) VALUES(1, 0)", (err : any) => {
+            this.db?.run("INSERT OR IGNORE INTO players(name, wins) VALUES(1, 0)", (err : any) => {
                 if (err) {
-                return console.log(err.message);
+                    return console.log(err.message);
                 }
-                console.log("Player1 entry has been inserted");
+                console.log("Player1 entry already exists or has been inserted");
             });
-            this.db?.run("INSERT INTO players(name, wins) VALUES(2, 0)", (err : any) => {
+            this.db?.run("INSERT OR IGNORE INTO players(name, wins) VALUES(2, 0)", (err : any) => {
                 if (err) {
-                return console.log(err.message);
+                    return console.log(err.message);
                 }
-                console.log("Player2 entry has been inserted");
+                console.log("Player2 entry already exists or has been inserted");
             });
         })
     }
@@ -60,7 +60,7 @@ export class sqliteDB implements DB {
         return new Promise((resolve, reject) => {
             let message = "";
             let sql = "SELECT * FROM players";
-            this.db?.all(sql, (err: Error, rows: any) => {
+            this.db?.all(sql, (err: any, rows: any) => {
                 if (err) {
                     reject(err);
                 }

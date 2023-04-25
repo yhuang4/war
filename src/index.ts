@@ -5,8 +5,7 @@ import { sqliteDB } from './db';
 
 let db = new sqliteDB();
 
-db.createDB();
-db.initizlizeDB();
+db.openDB();
 
 // Endpoint to start a game
 app.post('/game', async (req: Request, res: Response) => {
