@@ -40,8 +40,14 @@ node playGame # Start a game on the server, and it will return the winner.
 node getWins # Get the lifetime wins of both players.
 ```
 
-### Run the tests
+## Run the tests
 
 ```
 yarn test
 ```
+
+## Future work
+
+Currently, the application stores only the lifetime wins in a local, on-disk database since this is a smaller scale project. However, for future development, I plan on considering utilizing a cloud database.
+
+If given more time, I would like to store the game data as well so that the games can be replayed. Additionally, I plan on developing a user interface that shows the progress of the game, which will allow the client to better understand the game and its outcomes.
