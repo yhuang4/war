@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { playGame } from './game.js';
+import { playGame } from './game';
 import { sqliteDB } from './db';
 const app = express();
 
@@ -30,3 +30,5 @@ app.get('/wins', async (req: Request, res: Response) => {
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
+
+export default app;
