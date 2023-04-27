@@ -1,4 +1,4 @@
-import { shuffleDeck, dealDeck, simulateGame } from './game.ts'
+import { shuffleDeck, dealDeck, simulateGame } from './game'
 import { Queue } from '@datastructures-js/queue';
 
 test('Shuffled deck should be different', () => {
